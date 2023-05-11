@@ -1,0 +1,22 @@
+div.home {
+    width: 90%;
+    margin: 0 auto;
+    margin-top: 100px;
+    div.home-side-bar {
+        width: 90%;
+        height: 500px;
+        box-shadow: rgba(149, 157, 165, 0.2) 0px 8px 24px;
+        border-radius: 10px;
+        div.archive {
+            box-shadow: rgba(149, 157, 165, 0.2) 0px 8px 24px;
+            width: 90%;
+            margin: 0 auto;
+            margin-bottom: 40px;
+            border-radius: 5px;
+            p {
+                padding: 15px 0;
+                margin-left: 15px;
+            }
+        }
+    }
+}
