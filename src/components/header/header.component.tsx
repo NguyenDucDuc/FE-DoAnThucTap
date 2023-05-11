@@ -1,4 +1,4 @@
-import { AppstoreOutlined, LoginOutlined, LogoutOutlined, MailOutlined, UserOutlined } from '@ant-design/icons';
+import { AppstoreOutlined, BuildOutlined, GifOutlined, LoginOutlined, LogoutOutlined, MailOutlined, MenuOutlined, SignalFilled, UserOutlined } from '@ant-design/icons';
 import { Col, Menu, MenuProps, Row, Spin, notification } from 'antd'
 import { useEffect, useState } from 'react';
 import "./header.style.scss"
@@ -52,40 +52,49 @@ export const Header = () => {
         return {
             label: `${item.name}`,
             key: `${item.id}`,
-            icon: <MailOutlined />,
+            icon: <BuildOutlined />,
             onClick: () => {
                 dispatch(getAllProductAsyncThunk(`${endpoints.product.getAll}?category=${item.id}`))
             },
         }
     }))
-    items.push(
-        user.fullName !== "" ? 
-    {
-        label: <Link to="/login" style={{color: 'black'}}>{user.fullName}</Link>,
-        key: 'user',
+    items.push({
+        label: `Đăng ký`,
+        key: `Register`,
         icon: <UserOutlined />,
-        children: [
+        onClick: () => {
+            nav('/register')
+        },
+    })
+    items.push(
+        user.fullName !== "" ?
             {
-                label: <Link to='/login'>Đăng xuất</Link>,
-                key: 'logout',
-                icon: <LogoutOutlined />,
-                onClick: async () => {
-                    await dispatch(logOutUserRedux())
-                    localStorage.removeItem('accessToken')
-                    api.success({
-                        message: "Thông báo",
-                        description: "Đăng xuất thành công ",
-                        duration: 3
-                      });
-                }
+                label: <Link to="/login" style={{ color: 'black' }}>{user.fullName}</Link>,
+                key: 'user',
+                icon: <UserOutlined />,
+                children: [
+                    {
+                        label: <Link to='/login'>Đăng xuất</Link>,
+                        key: 'logout',
+                        icon: <LogoutOutlined />,
+                        onClick: async () => {
+                            await dispatch(logOutUserRedux())
+                            localStorage.removeItem('accessToken')
+                            localStorage.removeItem('accessTokenAdmin')
+                            api.success({
+                                message: "Thông báo",
+                                description: "Đăng xuất thành công ",
+                                duration: 3
+                            });
+                        }
+                    },
+                ]
+            } :
+            {
+                label: <Link to='/login'>Chưa đăng nhập</Link>,
+                key: 'login',
+                icon: <LoginOutlined />,
             },
-        ]
-    } :  
-    {
-        label: <Link to='/login'>Chưa đăng nhập</Link>,
-        key: 'login',
-        icon: <LoginOutlined />,
-    },
     )
     // const items: MenuProps['items'] = [
     //     {
@@ -175,7 +184,7 @@ export const Header = () => {
                         <Menu onClick={onClick} selectedKeys={[current]} mode="horizontal" items={items} />
                     </Col>
                     <Col span={3}>
-                        <img style={{ width: 55, height: 55, borderRadius: 50, border: '2.5px solid black', marginLeft: -15, marginTop: -5 }} src={user.avatar} />
+                        <img style={{ width: 55, height: 55, borderRadius: 50, border: '2.5px solid black', marginLeft: -15, marginTop: -5, objectFit: 'cover' }} src={user.avatar} />
                     </Col>
                 </Row>
             </div>
